@@ -69,6 +69,31 @@ struct linAlg {
 
 
     template<typename type>
+    type** identityMatrix(int row, int col) {
+        type** matrix;
+        size_t rowSize = row * sizeof(type*);
+        size_t colSize = col * sizeof(type);
+        matrix = (type**) malloc(rowSize);
+
+        for (int i = 0; i < row; i++) {
+            matrix[i] = (type*) malloc(colSize);
+
+            for (int j = 0; j < col; j++) {
+
+                if (i == j) {
+                    matrix[i][j] = 1;
+                }
+                else {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+        return matrix;
+    }
+
+
+
+    template<typename type>
     void scalarMult(type** matrix, int row, int col, double scalar) {
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -139,6 +164,11 @@ int main() {
 
     OBJ.scalarMult<defaultType>(matrixC, row, col, -1);
     OBJ.printMatrix<defaultType>(matrixC, row, col);
+
+
+    defaultType** identMatrix = OBJ.identityMatrix<defaultType>(row, col);
+    OBJ.scalarMult<defaultType>(identMatrix, row, col, -1);
+    OBJ.printMatrix<defaultType>(identMatrix, row, col);
 
     std::cin.get();
 
