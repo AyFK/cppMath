@@ -47,7 +47,7 @@ type** linAlg::copyMatrix(type** matrix, int row, int col) {
 
 
 template<typename type>
-type** linAlg::randMatrix(int row, int col) {
+type** linAlg::randMatrix(int row, int col, double minVal, double maxVal) {
     type** matrix;
     size_t rowSize = row * sizeof(type*);
     size_t colSize = col * sizeof(type);
@@ -57,8 +57,10 @@ type** linAlg::randMatrix(int row, int col) {
     std::default_random_engine generator(seed);
 
     // fix this issue later - ^default function parameters
+    /*
     double minVal = -1;
     double maxVal = 1;
+    */
 
 
     for (int i = 0; i < row; i++) {

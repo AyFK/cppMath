@@ -10,7 +10,7 @@ struct linAlg {
     type** copyMatrix(type** matrix, int row, int col);
 
     template<typename type>
-    type** randMatrix(int row, int col);
+    type** randMatrix(int row, int col, double minVal=-1, double maxVal=1);
 
     template<typename type>
     type** identityMatrix(int row, int col);
