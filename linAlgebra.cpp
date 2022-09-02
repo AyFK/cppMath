@@ -10,141 +10,149 @@ typedef ttmath::Big<TTMATH_BITS(64), TTMATH_BITS(128)> massDouble;
 
 typedef double defaultType;
 
-struct linAlg {
+
+#include "exports.h"
 
 
-    template<typename type>
-    void delMatrix(type** matrix, int row) {
-        for (int i = 0; i < row; i++) {
-            free(matrix[i]);
-        }
-        free(matrix);
+
+
+template<typename type>
+void linAlg::delMatrix(type** matrix, int row) {
+    for (int i = 0; i < row; i++) {
+        free(matrix[i]);
     }
+    free(matrix);
+}
 
 
 
-    template<typename type>
-    type** copyMatrix(type** matrix, int row, int col) {
-        type** newMatrix;
-        size_t rowSize = row * sizeof(type*);
-        size_t colSize = col * sizeof(type);
-        newMatrix = (type**) malloc(rowSize);
+template<typename type>
+type** linAlg::copyMatrix(type** matrix, int row, int col) {
+    type** newMatrix;
+    size_t rowSize = row * sizeof(type*);
+    size_t colSize = col * sizeof(type);
+    newMatrix = (type**) malloc(rowSize);
 
-        for (int i = 0; i < row; i++) {
-            newMatrix[i] = (type*) malloc(colSize);
+    for (int i = 0; i < row; i++) {
+        newMatrix[i] = (type*) malloc(colSize);
 
-            for (int j = 0; j < col; j++) {
-                newMatrix[i][j] = matrix[i][j];
+        for (int j = 0; j < col; j++) {
+            newMatrix[i][j] = matrix[i][j];
+        }
+    }
+    return newMatrix;
+}
+
+
+
+
+template<typename type>
+type** linAlg::randMatrix(int row, int col) {
+    type** matrix;
+    size_t rowSize = row * sizeof(type*);
+    size_t colSize = col * sizeof(type);
+    matrix = (type**) malloc(rowSize);
+
+    int seed = rand();
+    std::default_random_engine generator(seed);
+
+    // fix this issue later - ^default function parameters
+    double minVal = -1;
+    double maxVal = 1;
+
+
+    for (int i = 0; i < row; i++) {
+        matrix[i] = (type*) malloc(colSize);
+
+        for (int j = 0; j < col; j++) {
+            std::uniform_real_distribution<double> dist(minVal, maxVal);
+            type randVal = dist(generator);
+            matrix[i][j] = randVal;
+        }
+    }
+    return matrix;
+}
+
+
+
+template<typename type>
+type** linAlg::identityMatrix(int row, int col) {
+    type** matrix;
+    size_t rowSize = row * sizeof(type*);
+    size_t colSize = col * sizeof(type);
+    matrix = (type**) malloc(rowSize);
+
+    for (int i = 0; i < row; i++) {
+        matrix[i] = (type*) malloc(colSize);
+
+        for (int j = 0; j < col; j++) {
+
+            if (i == j) {
+                matrix[i][j] = 1;
             }
-        }
-
-        return newMatrix;
-    }
-
-
-
-
-    template<typename type>
-    type** randMatrix(int row, int col, double minVal=-1, double maxVal=1) {
-        type** matrix;
-        size_t rowSize = row * sizeof(type*);
-        size_t colSize = col * sizeof(type);
-        matrix = (type**) malloc(rowSize);
-
-        int seed = rand();
-        std::default_random_engine generator(seed);
-
-        for (int i = 0; i < row; i++) {
-            matrix[i] = (type*) malloc(colSize);
-
-            for (int j = 0; j < col; j++) {
-                std::uniform_real_distribution<double> dist(minVal, maxVal);
-                type randVal = dist(generator);
-                matrix[i][j] = randVal;
-            }
-        }
-        return matrix;
-    }
-
-
-
-    template<typename type>
-    type** identityMatrix(int row, int col) {
-        type** matrix;
-        size_t rowSize = row * sizeof(type*);
-        size_t colSize = col * sizeof(type);
-        matrix = (type**) malloc(rowSize);
-
-        for (int i = 0; i < row; i++) {
-            matrix[i] = (type*) malloc(colSize);
-
-            for (int j = 0; j < col; j++) {
-
-                if (i == j) {
-                    matrix[i][j] = 1;
-                }
-                else {
-                    matrix[i][j] = 0;
-                }
-            }
-        }
-        return matrix;
-    }
-
-
-
-    template<typename type>
-    void scalarMult(type** matrix, int row, int col, double scalar) {
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                if (matrix[i][j] != 0) {
-                    matrix[i][j] *= scalar;
-                }
+            else {
+                matrix[i][j] = 0;
             }
         }
     }
+    return matrix;
+}
 
 
 
-    template<typename type>
-    type** dotProduct(type** matrixA, int dimA, type** matrixB, int dimB) {
-        // calculate product of two equal symmetric matrices
-        // ASSUMPION : matrixA and matrixB are of equal 'type'
-        type** product;
-        size_t rowSize = dimA * sizeof(type*);
-        size_t colSize = dimB * sizeof(type);
-
-        product = (type**) malloc(rowSize);
-
-        for (int i = 0; i < dimA; i++) {
-            product[i] = (type*) malloc(colSize);
-
-
-            for(int j = 0; j < dimB; j++) {
-                product[i][j] = 0;
-
-                for(int k = 0; k < dimB; k++) {
-                    product[i][j] += matrixA[i][k] * matrixB[k][j];
-                }
+template<typename type>
+void linAlg::scalarMult(type** matrix, int row, int col, double scalar) {
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            if (matrix[i][j] != 0) {
+                matrix[i][j] *= scalar;
             }
         }
-        return product;
     }
+}
 
 
 
-    template<typename type>
-    void printMatrix(type** matrix, int row, int col) {
-        for (int i = 0; i < row; i++) {
-            std::cout << "\n";
+template<typename type>
+type** linAlg::dotProduct(type** matrixA, int dimA, type** matrixB, int dimB) {
+    // calculate product of two equal symmetric matrices
+    // ASSUMPION : matrixA and matrixB are of equal 'type'
+    type** product;
+    size_t rowSize = dimA * sizeof(type*);
+    size_t colSize = dimB * sizeof(type);
 
-            for (int j = 0; j < col; j++) {
-                std::cout << matrix[i][j] << " ";
+    product = (type**) malloc(rowSize);
+
+    for (int i = 0; i < dimA; i++) {
+        product[i] = (type*) malloc(colSize);
+
+
+        for(int j = 0; j < dimB; j++) {
+            product[i][j] = 0;
+
+            for(int k = 0; k < dimB; k++) {
+                product[i][j] += matrixA[i][k] * matrixB[k][j];
             }
         }
+    }
+    return product;
+}
+
+
+
+template<typename type>
+void linAlg::printMatrix(type** matrix, int row, int col) {
+    for (int i = 0; i < row; i++) {
         std::cout << "\n";
+
+        for (int j = 0; j < col; j++) {
+            std::cout << matrix[i][j] << " ";
+        }
     }
-};
+    std::cout << "\n";
+}
+
+
 
 int main() {
     srand(time(NULL));
