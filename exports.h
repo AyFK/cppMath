@@ -22,6 +22,15 @@ struct linAlg {
     type** dotProduct(type** matrixA, int dimA, type** matrixB, int dimB);
 
     template<typename type>
+    type** transposed(type** matrix, int row, int col);
+
+    template<typename type>
+    double determinant(type** matrix, int dim);
+
+    template<typename type>
+    void inverse(type** matrix, int dim);
+
+    template<typename type>
     void printMatrix(type** matrix, int row, int col);
 
 };
