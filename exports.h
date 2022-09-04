@@ -34,3 +34,8 @@ struct linAlg {
     void printMatrix(type** matrix, int row, int col);
 
 };
+
+
+struct stats {
+
+};
