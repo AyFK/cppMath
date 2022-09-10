@@ -36,6 +36,8 @@ struct linAlg {
 };
 
 
-struct stats {
+struct stats : public linAlg {
+
+    void TEST();
 
 };

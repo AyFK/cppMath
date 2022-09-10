@@ -6,6 +6,8 @@
 
 
 typedef double defaultType;
+const double tau = 6.28319;
+const double e = 2.71828;
 
 #include "exports.h"
 
@@ -40,4 +42,22 @@ a recursive method to minimize variance could be applied, no?
 */
 
 
+void stats::TEST() {
+
+    std::cout << tau << "\n" << e << "\n";
+
+    defaultType** M = randMatrix<defaultType>(3, 3);
+
+}
+
+
+
+int main() {
+    srand(time(NULL));
+
+
+    stats OBJ;
+    OBJ.TEST();
+
+}
 
