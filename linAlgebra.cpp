@@ -6,7 +6,7 @@
 
 #include "exports.h"
 
-typedef double defaultType;
+//typedef double defaultType;
 
 
 template<typename type>
@@ -287,6 +287,7 @@ void linAlg::printMatrix(type** matrix, int row, int col) {
 
 
 
+/*
 int main() {
     srand(time(NULL));
 
@@ -325,3 +326,4 @@ int main() {
 
     return 0;
 }
+*/

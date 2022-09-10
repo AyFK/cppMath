@@ -42,13 +42,18 @@ a recursive method to minimize variance could be applied, no?
 */
 
 
+/*
 void stats::TEST() {
 
     std::cout << tau << "\n" << e << "\n";
 
-    defaultType** M = randMatrix<defaultType>(3, 3);
+    //defaultType** matrixA = OBJ.randMatrix<defaultType>(row, col);
+
+    //defaultType** M = randMatrix<defaultType>(3, 3);
+    //printMatrix<defaultType>(matrixA, row, col);
 
 }
+*/
 
 
 
@@ -56,8 +61,15 @@ int main() {
     srand(time(NULL));
 
 
-    stats OBJ;
-    OBJ.TEST();
 
+
+    linAlg OBJ_2;
+
+    std::cout << OBJ_2.test; // works
+
+    defaultType** M = OBJ_2.randMatrix<defaultType>(3, 3); // does not work
+
+
+    return 0;
 }
 

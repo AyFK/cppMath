@@ -1,7 +1,10 @@
-
+#ifndef FUNCTIONS_H_
+#define FUNCTIONS_H_
 
 
 struct linAlg {
+
+    int test = 42;
 
     template<typename type>
     void delMatrix(type** matrix, int row);
@@ -36,8 +39,12 @@ struct linAlg {
 };
 
 
-struct stats : public linAlg {
+/*
+struct stats {
 
     void TEST();
 
 };
+*/
+
+#endif
