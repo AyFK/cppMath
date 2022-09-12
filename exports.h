@@ -39,12 +39,11 @@ struct linAlg {
 };
 
 
-/*
-struct stats {
+struct stats : linAlg {
 
     void TEST();
 
 };
-*/
+
 
 #endif
