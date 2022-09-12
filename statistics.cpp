@@ -10,6 +10,7 @@ const double tau = 6.28319;
 const double e = 2.71828;
 
 #include "exports.h"
+#include "linAlgebra.cpp" // temporary solution - bad practice
 
 
 
@@ -68,6 +69,7 @@ int main() {
     std::cout << OBJ_2.test; // works
 
     defaultType** M = OBJ_2.randMatrix<defaultType>(3, 3); // does not work
+    OBJ_2.printMatrix<defaultType>(M, 3, 3);
 
 
     return 0;

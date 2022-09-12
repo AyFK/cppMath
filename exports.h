@@ -1,5 +1,5 @@
-#ifndef FUNCTIONS_H_
-#define FUNCTIONS_H_
+#ifndef EXPORTS_H
+#define EXPORTS_H
 
 
 struct linAlg {
